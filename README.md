@@ -48,7 +48,7 @@ and is going to serve as a backend for an parking app.
 - Spring Data JPA
 - Mysql Driver
 
-Thinsg we want to store in enteties: 
+Things we want to store in enteties: 
 
 * Person (can have one or more cars)
 * Car (only one person can be connected to a car)
