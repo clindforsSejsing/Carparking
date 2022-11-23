@@ -6,39 +6,10 @@ import jakarta.persistence.*;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String typeOfCar;
+    @Column (length= 10)
     private String regNr;
-    //id, auto_increment
-    //bilmärke
-    //registreringsnummer
-    //foreignkey för en person
-
-    @ManyToOne
-    Person person;
-    public Car() {
-
-    }
-
-   /* public Set<Person> getPerson() {
-        return person;
-    }
-
-    public void setPerson(Set<Person> person) {
-        this.person = person;
-    }*/
-
-   /* @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})*/
-    // @JoinColumn("name" = )
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column (length= 50)
+    private String typeOfCar;
 
     public String getTypeOfCar() {
         return typeOfCar;
@@ -53,13 +24,6 @@ public class Car {
     }
 
     public void setRegNr(String regNr) {
-        this.regNr = regNr;
-    }
-
-
-
-    public Car(String typeOfCar, String regNr) {
-        this.typeOfCar = typeOfCar;
         this.regNr = regNr;
     }
 }
