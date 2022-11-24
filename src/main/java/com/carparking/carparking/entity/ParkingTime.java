@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+//id för parkeringstid
+//tid för start (nu)
+//tid för stopp (aktivt val som inte kan vara nu)
+//tid för att förlänga (uppdatera stopptid, utan att mixtra med starttid)
+
+
 @Entity
 public class ParkingTime {
     @Id
@@ -15,6 +21,7 @@ public class ParkingTime {
     private Long id;
 
     @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="parkingtime_id")
     private Set<ParkingLocation> parkinglocation = new HashSet<>();
     public Long getId() {
         return id;
@@ -24,6 +31,13 @@ public class ParkingTime {
         this.id = id;
     }
 
+    public Set<ParkingLocation> getParkinglocation() {
+        return parkinglocation;
+    }
+
+    public void setParkinglocation(Set<ParkingLocation> parkinglocation) {
+        this.parkinglocation = parkinglocation;
+    }
 
     public LocalDateTime getCreated() {
         return created;
@@ -48,11 +62,5 @@ public class ParkingTime {
     @UpdateTimestamp
     private LocalDateTime modified;
 
-
-    //id för parkeringstid
-    //tid för start (nu)
-    //tid för stopp (aktivt val som inte kan vara nu)
-    //tid för att förlänga (uppdatera stopptid, utan att mixtra med starttid)
-    //foreignkey parkingLocation
 
 }

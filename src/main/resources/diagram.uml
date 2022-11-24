@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-64.83333333333331" y="-64.5">com.carparking.carparking.entity.Car</node>
+    <node x="-299.83333333333326" y="-64.5">com.carparking.carparking.entity.ParkingLocation</node>
+    <node x="-80.33333333333331" y="-136.5">com.carparking.carparking.entity.Person</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.carparking.carparking.entity.Person" target="com.carparking.carparking.entity.Car" relationship="TO_MANY">
+      <point x="0.0" y="18.5" />
+      <point x="0.0" y="-18.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="true" x="80.83333333333337" y="9.5" />
+  <SelectedNodes>
+    <node>com.carparking.carparking.entity.Person</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

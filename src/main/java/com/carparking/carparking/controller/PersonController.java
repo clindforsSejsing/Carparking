@@ -39,23 +39,20 @@ public class PersonController {
     }
 
 
+//för att kunna skapa ett parkeringstillfälle behövs person_id, car, location och tid.
+    //parking.java @ManyToMany(cascade = cascadeType.PERSIST)
+    //private Set<Parking> parkings = new HashSet<>(); (Om man använder Persist, finns risk för rekursion- adda @Jsonignore på
+    //kopian av objectet i klass-filen som är kopplad till huvudklassfilen.
+
+    //skriva special metod i interface- se lektion del 2 14/11 1.25-30
+
+    //@PostMapping("/parkings"
+    //public Parking addParking(@RequestBody Parking parking){
+    // return parkingrepo.save(parking}; 20-23 min 14/11 del 2 lektion
 
 
 
 
-      /*  @GetMapping("/persons")
-        public List<Person> getPerson (@PathVariable Long id){
-            return List.of(new Person("Kalle"), new Person("olle"));*/
-
-/*   @GetMapping("/persons")
-    public List<Person> getPerson (){
-        return List.of(new Person("Kalle"), new Person("olle"));
-    }
-
-    @GetMapping("/persons/{id}")
-    public Person getOnePerson(){
-        return new Person("Pelle");
-    }*/
 
 
     /*@PostMapping("/persons")
@@ -65,25 +62,7 @@ public class PersonController {
         return "Person saved";
     }*/
 
-  /*  @GetMapping("/parkinglocations")
-    public Person getOnePerson(@PathVariable int id) {
-        return new Person("kalle anka");
-    }
 
-    @GetMapping("/parkinglocations/{id}")
-    public String message5() {
-        return "Return one parkinglocation";
-    }
-
-    @GetMapping("/ended_parkings/{id}")
-    public String message6() {
-        return "Return all ended parkings for a car or a person";
-    }
-
-    @GetMapping("/ongoining_parkings/{id}")
-    public String message7() {
-        return "Return one ongoining parking depending on car or person";
-    }*/
 
   /*  @PostMapping("/persons")
     public String addPerson(@RequestBody Person person) {

@@ -1,15 +1,21 @@
 package com.carparking.carparking.entity;
-//lektion 14/11  kl 1.25 fortsätta bygga api
-//sätta in env.key- commita kod
+// fortsätta bygga api hjälpmetoder
+//list eller set (set = inga upprepningar).
+//kolla dokumentation för queryfrågor (lektion 14/11  kl 1.33) ,  manttomany, 2.21- querys
+//TODO:
+// 1.Skriva klart hur tabellerna ska kopplas ihop[x]
+//2. adda hårdkodad data till bla locations []
+//3. skriv querys för att få ut relevant data / post/ patch/ put []
+//4. skriv dokumentation för API i readme.md[]
+//5. adda javadocs, städa koden[]
+
+
 
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-//id som auto_inc och som sätts som individuellt av hibernate
-//namn
-//foreigner som kopplar samman med parkeringstid
 @Entity
 public class Person {
     @Id
@@ -18,7 +24,7 @@ public class Person {
     @Column (length= 50)
     private String name;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="car_id")
+    @JoinColumn(name="person_id")
     private Set<Car> cars = new HashSet<>();
    /*  @OneToMany
     Set<Car> cars;*/
