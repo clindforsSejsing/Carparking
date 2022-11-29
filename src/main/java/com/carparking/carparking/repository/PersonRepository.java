@@ -6,5 +6,3 @@ import org.springframework.data.repository.CrudRepository;
 public interface PersonRepository extends CrudRepository <Person, Long> {
 
 }
-
-//interface som sparar ned data i databasen

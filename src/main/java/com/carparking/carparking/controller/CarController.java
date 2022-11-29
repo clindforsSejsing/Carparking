@@ -2,41 +2,78 @@ package com.carparking.carparking.controller;
 
 import com.carparking.carparking.entity.Car;
 import com.carparking.carparking.repository.CarRepository;
+import com.carparking.carparking.repository.PersonRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
+import java.util.Optional;
 
+@RestController
 public class CarController {
 
+    //går att posta men inte get:a
     CarRepository carRepository;
+    PersonRepository personRepository;
 
-    public CarController(CarRepository carRespository) {
+    public CarController(CarRepository carRespository, PersonRepository personRepository) {
         this.carRepository = carRespository;
+        this.personRepository = personRepository;
     }
 
-    //skapar o använder repository. Constructor för att kunna uppdatera den.
-
-
-    //fetcha från db??
     @GetMapping("/cars")
-    public List<Car> getCar () {
-        return List.of();
+    public Iterable<Car> getall() {
+        return carRepository.findAll();
     }
 
     @GetMapping("/cars/{id}")
-    public Car getOneCar(@PathVariable String regNr) {
-        return (Car) carRepository.findAll();
+    public Optional<Car> getOne(@PathVariable Long id) {
+        return carRepository.findById(id);
 
     }
+
+
+   /* @PostMapping("/cars")
+    public ResponseEntity<Car> createCar(@RequestBody Car car, Person person) {
+
+        var p = personRepository.findById(person.getId());
+        car.setPerson(person);
+        var c = carRepository.save(car);
+        return  ResponseEntity.created(
+        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri()).build();
+    }*/
     @PostMapping("/cars")
     public ResponseEntity<Car> createCar(@RequestBody Car car) {
         var c = carRepository.save(car);
         return  ResponseEntity.created(
-        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getRegNr()).toUri()).build();
+        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri()).build();
     }
+
+  /*  @PostMapping("/cars")
+    public Car addCar(@RequestBody Person person) {
+        var m = Set.copyOf(person.getCars());
+        person.getCars().clear();
+        for (Car car : m) {
+            if (car.getId() != null)
+                Person.getCars()
+                        .add(
+                                memberRepository.findById(member.getId())
+                                        .orElse(member));
+            else
+                organization.getMembers()
+                        .add(member);
+        }
+
+        return orgrepo.save(organization);
+
+        // return orgrepo.findByName("Gulfuddens AIK");
+        // return orgrepo.findOrganizationByMembersName("Martin");
+    }*/
+
 }
+  /*  @PostMapping("/cars")
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+        var c = carRepository.save(car);
+        return  ResponseEntity.created(
+                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getRegNr()).toUri()).build();
+    }*/

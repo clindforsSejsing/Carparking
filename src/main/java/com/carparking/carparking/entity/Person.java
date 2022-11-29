@@ -2,32 +2,40 @@ package com.carparking.carparking.entity;
 // fortsätta bygga api hjälpmetoder
 //list eller set (set = inga upprepningar).
 //kolla dokumentation för queryfrågor (lektion 14/11  kl 1.33) ,  manttomany, 2.21- querys
+//lektion 17 också
 //TODO:
 // 1.Skriva klart hur tabellerna ska kopplas ihop[x]
-//2. adda hårdkodad data till bla locations []
+//2. adda hårdkodad data till bla locations, läsa om geolatte, fixa kodimplementationen i bean [x]
 //3. skriv querys för att få ut relevant data / post/ patch/ put []
-//4. skriv dokumentation för API i readme.md[]
-//5. adda javadocs, städa koden[]
+//4. metoder för filtrering? adda i servicefiler alt repository []
+//5. skriv dokumentation för API i readme.md[]
+//6. adda javadocs, städa koden[]
 
-
+//skriva ihop en controller för entiterna car och person för att kunna sammanfoga dem.
+//OneToMany- Lazy
+//ManyToOne- EAGER
+//ManyToMany- Lazy
+//OneToOne: Eager
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column (length= 50)
+
+    @Column (length= 50, nullable = false)
     private String name;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="person_id")
-    private Set<Car> cars = new HashSet<>();
-   /*  @OneToMany
-    Set<Car> cars;*/
+
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, fetch =FetchType.EAGER)
+    @JoinColumn(name="person_id", referencedColumnName = "id")//add nullabel=false
+    private List<Car> cars = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -45,11 +53,17 @@ public class Person {
         this.name = name;
     }
 
-    public Set<Car> getCars() {
+    public List<Car> getCars() {
         return cars;
     }
 
-    public void setCars(Set<Car> cars) {
+    public void setCars(List<Car> cars) {
         this.cars = cars;
     }
+
+    public void addCar(Car car){
+        car.setPerson(this);
+        this.cars.add(car);
+    }
+
 }

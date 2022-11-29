@@ -3,20 +3,20 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="-64.83333333333331" y="-64.5">com.carparking.carparking.entity.Car</node>
-    <node x="-299.83333333333326" y="-64.5">com.carparking.carparking.entity.ParkingLocation</node>
-    <node x="-80.33333333333331" y="-136.5">com.carparking.carparking.entity.Person</node>
+    <node x="398.33333333333337" y="77.5">com.carparking.carparking.entity.Person</node>
+    <node x="252.5000000000001" y="77.5">com.carparking.carparking.entity.Car</node>
+    <node x="502.16666666666663" y="217.49999999999997">com.carparking.carparking.entity.ParkingLocation</node>
   </nodes>
   <notes />
   <edges>
     <edge source="com.carparking.carparking.entity.Person" target="com.carparking.carparking.entity.Car" relationship="TO_MANY">
-      <point x="0.0" y="18.5" />
-      <point x="0.0" y="-18.5" />
+      <point x="-62.0" y="0.0" />
+      <point x="46.5" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="true" x="80.83333333333337" y="9.5" />
+  <settings layout="Hierarchic Compact" zoom="1.5" showDependencies="true" x="681.3333333333333" y="186.66666666666666" />
   <SelectedNodes>
-    <node>com.carparking.carparking.entity.Person</node>
+    <node>com.carparking.carparking.entity.ParkingLocation</node>
   </SelectedNodes>
   <Categories />
   <SCOPE>All</SCOPE>
