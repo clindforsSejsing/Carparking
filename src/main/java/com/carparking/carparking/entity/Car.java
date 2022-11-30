@@ -17,6 +17,18 @@ public class Car {
     @JsonIgnore
     private Person person;
 
+   /* @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
+    @JoinColumn(name="car_id", referencedColumnName = "id")
+    private List<ParkingTime> ParkingTimeForcars = new ArrayList<>();*/
+
+    /*public List<ParkingTime> getParkingTimeForcars() {
+        return ParkingTimeForcars;
+    }
+
+    public void setParkingTimeForcars(List<ParkingTime> parkingTimeForcars) {
+        ParkingTimeForcars = parkingTimeForcars;
+    }*/
+
     public Person getPerson() {
         return person;
     }
@@ -40,28 +52,3 @@ public class Car {
         this.reg = regNr;
     }
 }
-
-
-/* @ManyToOne(cascade ={CascadeType.PERSIST, CascadeType.MERGE}, fetch =FetchType.EAGER)
-    @JoinColumn(name="person_id", referencedColumnName = "id")
-    private Person person;*/
-
-   /* public List<ParkingTime> getParkingTimeList() {
-        return parkingTimeList;
-    }*/
-
-  /*  public void setParkingTimeList(List<ParkingTime> parkingTimeList) {
-        this.parkingTimeList = parkingTimeList;
-    }*/
-
- /*   public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }*/
-
-/* @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="car_id")
-    private List<ParkingTime> parkingTimeList = new ArrayList<>();*/

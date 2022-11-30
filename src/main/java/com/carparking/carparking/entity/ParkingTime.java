@@ -1,12 +1,11 @@
 package com.carparking.carparking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 //id för parkeringstid
 //tid för start (nu)
@@ -20,23 +19,37 @@ public class ParkingTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="parkingtime_id")
-    private Set<ParkingLocation> parkinglocation = new HashSet<>();
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
+    @JsonIgnore
+    private ParkingLocation parkingLocation;
+
+    public ParkingLocation getParkingLocation() {
+        return parkingLocation;
+    }
+
+    public void setParkingLocation(ParkingLocation parkingLocation) {
+        this.parkingLocation = parkingLocation;
+    }
+
+   /* @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
+    @JsonIgnore
+    private Car car;*/
+
+
+ /*   public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }*/
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Set<ParkingLocation> getParkinglocation() {
-        return parkinglocation;
-    }
-
-    public void setParkinglocation(Set<ParkingLocation> parkinglocation) {
-        this.parkinglocation = parkinglocation;
     }
 
     public LocalDateTime getCreated() {
@@ -56,11 +69,13 @@ public class ParkingTime {
     }
 
     @CreationTimestamp
-    /*@Column(name= "created", nullable = false, updatable = false)*/
+    @Column(name= "created", nullable = false, updatable = false)
     private LocalDateTime created;
+    //skapar timestamp till nu. Förhindrar att den skrivs över
 
     @UpdateTimestamp
     private LocalDateTime modified;
 
 
 }
+

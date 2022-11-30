@@ -11,7 +11,7 @@ package com.carparking.carparking.entity;
 //5. skriv dokumentation för API i readme.md[]
 //6. adda javadocs, städa koden[]
 
-//skriva ihop en controller för entiterna car och person för att kunna sammanfoga dem.
+
 //OneToMany- Lazy
 //ManyToOne- EAGER
 //ManyToMany- Lazy
@@ -31,9 +31,11 @@ public class Person {
     @Column (length= 50, nullable = false)
     private String name;
 
+    public Person() {
+    }
 
-    @OneToMany(cascade = {CascadeType.PERSIST}, fetch =FetchType.EAGER)
-    @JoinColumn(name="person_id", referencedColumnName = "id")//add nullabel=false
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
+    @JoinColumn(name="person_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
     private List<Car> cars = new ArrayList<>();
 
 
