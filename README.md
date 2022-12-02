@@ -128,6 +128,7 @@ GET
 /api/cars
 
 Respons 200 Ok:
+
 [
 {
 "id": 1,
@@ -155,6 +156,7 @@ GET
 /api/cars/{id}
 
 Respons 200 Ok:
+
 {
 "id": 1,
 "reg": "batmanscar",
@@ -176,7 +178,7 @@ POST
 
 }
 
-Respons 201 created:
+Respons 201 Created:
 
 {
 "id": 1,
@@ -188,3 +190,94 @@ Respons 201 created:
 }
 
 ------------------------
+Fetch all parkeringlocations:
+
+GET
+/api/parkinglocations
+
+Respons 200 Ok:
+
+[
+{
+"id": 1,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58319179303082,
+22.174553982619024
+]
+},
+"name": "Malmudden",
+"longitude": null,
+"latitude": null,
+}, ...
+]
+
+--------------------------------
+Fetch a parkinglocation with id:
+
+GET
+/api/parkinglocations/{id}
+
+Respons 200 Ok:
+{
+"id": 1,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58319179303082,
+22.174553982619024
+]
+},
+"name": "Malmudden",
+"longitude": null,
+"latitude": null
+}
+
+--------------------------------
+Create a new parkinglocation:
+
+POST
+/api/parkinglocations/add
+
+(ex.)
+{
+"name":"Hertsön",
+"longitude":"65.58360721780332",
+"latitude": "22.24251754309973"
+}
+
+Respons 201 Created:
+
+{
+"id": 5,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58360721780332,
+22.24251754309973
+]
+},
+"name": "Hertsön",
+"longitude": "65.58360721780332",
+"latitude": "22.24251754309973"
+}
+--------------------------------

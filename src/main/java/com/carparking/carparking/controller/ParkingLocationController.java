@@ -2,39 +2,38 @@ package com.carparking.carparking.controller;
 
 import com.carparking.carparking.entity.ParkingLocation;
 import com.carparking.carparking.repository.ParkingLocationRepository;
+import com.carparking.carparking.service.ParkingLocationService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
-import java.util.Optional;
 
 
+@AllArgsConstructor
 @RestController
+@RequestMapping("/api/parkinglocations")
 public class ParkingLocationController {
     ParkingLocationRepository parkingLocationRepository;
+    ParkingLocationService parkingLocationService;
 
-    public ParkingLocationController(ParkingLocationRepository parkingLocationRepository) {
-        this.parkingLocationRepository = parkingLocationRepository;
+    @GetMapping
+    public ResponseEntity<List<ParkingLocation>> getParkingLocations()
+    {
+        return new ResponseEntity<>(parkingLocationService.getParkingLocation(), HttpStatus.OK);
     }
 
 
-    @GetMapping("/api/parkinglocations")
-    public List<ParkingLocation> allPoints() {
-        return parkingLocationRepository.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<ParkingLocation> getOneParkingLocation(@PathVariable Long id)
+    {
+        return new ResponseEntity<>(parkingLocationService.getOneParkingLocation(id), HttpStatus.OK);
     }
 
-
-    @GetMapping("/api/parkinglocations/{id}")
-    public Optional<ParkingLocation> getOne(@PathVariable Long id) {
-        return parkingLocationRepository.findById(id);
-    }
-
-    @PostMapping("/api/parkinglocations")
-    public ResponseEntity<ParkingLocation> createLocation(@RequestBody ParkingLocation parkinglocaton) {
-        var pl = parkingLocationRepository.save(parkinglocaton);
-        return  ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pl.getId()).toUri()).build();
+    @PostMapping("/add")
+    public ResponseEntity<ParkingLocation> saveParkingLocation(@RequestBody ParkingLocation parkingLocation) {
+        return new ResponseEntity<>(parkingLocationService.saveParkingLocation(parkingLocation), HttpStatus.CREATED);
     }
 }
 

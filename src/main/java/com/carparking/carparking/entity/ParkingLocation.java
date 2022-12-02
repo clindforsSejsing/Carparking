@@ -1,5 +1,6 @@
 package com.carparking.carparking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class ParkingLocation {
     @Transient
     private String latitude;
 
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
     @JoinColumn(name="parking_location_id",referencedColumnName = "id",nullable = false,insertable=false, updatable=false)
     private List<ParkingTime> parkinglocations = new ArrayList<>();
@@ -50,8 +52,8 @@ public class ParkingLocation {
         }
     }
 
-    public void addParkingLocation(ParkingTime parkingtime){
+  /*  public void addParkingLocation(ParkingTime parkingtime){
         parkingtime.setParkingLocation(this);
         this.parkinglocations.add(parkingtime);
-    }
+    }*/
 }

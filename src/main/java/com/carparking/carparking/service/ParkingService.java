@@ -7,19 +7,23 @@ import java.time.LocalDateTime;
 @Service
 public class ParkingService {
 
-    public boolean isOngoingParking(LocalDateTime startime, LocalDateTime stoptime) {
+    public boolean isOngoingParking(LocalDateTime startime, LocalDateTime modified) {
 
         LocalDateTime rightNow = LocalDateTime.now();
-        if (startime.equals(stoptime)) {
+        if (startime.equals(modified)) {
             return false;
-        } else return !stoptime.equals(rightNow) && !stoptime.isBefore(rightNow);
+        } else return !modified.equals(rightNow) && !modified.isBefore(rightNow);
     }
 
 
-    public boolean isStopTimeAfterStartTime(Long id, LocalDateTime stoptime){
+    /**
+     * @param id ParkingTime id
+     * @param modified stoptime for parking
+     * @return must contain id for ParkingTime and stoptime can not be set to be after starttime.
+     */
+    public boolean isStopTimeAfterStartTime(Long id, LocalDateTime modified){
 
         LocalDateTime rightNow = LocalDateTime.now();
-
-        return id != null && stoptime.isAfter(rightNow);
+        return id != null && modified.isAfter(rightNow);
     }
 }
