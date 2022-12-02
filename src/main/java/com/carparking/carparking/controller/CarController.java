@@ -5,7 +5,6 @@ import com.carparking.carparking.repository.CarRepository;
 import com.carparking.carparking.repository.PersonRepository;
 import com.carparking.carparking.service.CarService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
-    @Autowired
     CarService carService;
-
     CarRepository carRepository;
     PersonRepository personRepository;
 
@@ -29,7 +26,7 @@ public class CarController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCar(@PathVariable Long id) {
-        return new ResponseEntity<Car> (carService.getCar(id), HttpStatus.OK);
+        return new ResponseEntity<>(carService.getCar(id), HttpStatus.OK);
     }
 
     @GetMapping("/persons/{personId}")
