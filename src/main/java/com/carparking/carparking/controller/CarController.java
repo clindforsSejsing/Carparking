@@ -3,46 +3,44 @@ package com.carparking.carparking.controller;
 import com.carparking.carparking.entity.Car;
 import com.carparking.carparking.repository.CarRepository;
 import com.carparking.carparking.repository.PersonRepository;
+import com.carparking.carparking.service.CarService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Optional;
+import java.util.List;
 
+@AllArgsConstructor
 @RestController
+@RequestMapping("/api/cars")
 public class CarController {
+    @Autowired
+    CarService carService;
 
     CarRepository carRepository;
     PersonRepository personRepository;
 
-    public CarController(CarRepository carRespository, PersonRepository personRepository) {
-        this.carRepository = carRespository;
-        this.personRepository = personRepository;
+    @GetMapping
+    public ResponseEntity<List<Car>> getCars() {
+        return new ResponseEntity<>(carService.getCars(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/cars")
-    public Iterable<Car> getall() {
-        return carRepository.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCar(@PathVariable Long id) {
+        return new ResponseEntity<Car> (carService.getCar(id), HttpStatus.OK);
     }
 
-    @GetMapping("/api/cars/{id}")
-    public Optional<Car> getOne(@PathVariable Long id) {
-        return carRepository.findById(id);
-
+    @GetMapping("/persons/{personId}")
+    public ResponseEntity<List<Car>> getPersonsCars(@PathVariable Long personId) {
+        return new ResponseEntity<>(carService.getCarPersonById(personId), HttpStatus.OK);
     }
 
-    @PostMapping("/api/cars")
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
-        var c = carRepository.save(car);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri()).build();
+    @PostMapping("/persons/{personId}")
+    public ResponseEntity<Car> saveCar(@RequestBody Car car, @PathVariable Long personId) {
+        return new ResponseEntity<>(carService.saveCar(car, personId), HttpStatus.CREATED);
     }
 
- /*   @GetMapping("/api/cars/{car_Id}/persons/{person_Id}") {
-        Public ResponsEntity<Cars > saveCar(@RequestBody Car car, @PathVariable Long personId)
-
-        carRepository.findByPersonId();
-    }*/
 }
 
-//carRepository.findbyPersonId(personId);

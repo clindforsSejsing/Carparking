@@ -3,8 +3,10 @@ package com.carparking.carparking.repository;
 import com.carparking.carparking.entity.Car;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CarRepository extends CrudRepository<Car, Long> {
+import java.util.List;
 
-    Car findByPersonId(Long id);
+public interface CarRepository extends CrudRepository<Car, Long> {
+    List<Car> findByPersonId(Long personId);
+
 
 }

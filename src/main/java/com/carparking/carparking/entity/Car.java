@@ -1,6 +1,5 @@
 package com.carparking.carparking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +20,8 @@ public class Car {
     @Column (length= 25, nullable = false)
     private String reg;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Person person;
 
 }

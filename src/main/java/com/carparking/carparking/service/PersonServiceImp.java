@@ -16,9 +16,13 @@ public class PersonServiceImp implements PersonService{
     PersonRepository personRepository;
 
     @Override
+    public List<Person> getPersons() {
+        return (List<Person>)personRepository.findAll();
+    }
+    @Override
     public Person getPerson(Long id) {
         Optional<Person> person = personRepository.findById(id);
-        return unwrapPerson(person, id);
+        return findingPerson(person, id);
     }
 
     @Override
@@ -26,13 +30,8 @@ public class PersonServiceImp implements PersonService{
         return personRepository.save(person);
     }
 
-    @Override
-    public List<Person> getPersons() {
-        return (List<Person>)personRepository.findAll();
-    }
 
-
-    static Person unwrapPerson(Optional<Person> entity, Long id) {
+    static Person findingPerson(Optional<Person> entity, Long id) {
         if (entity.isPresent()) return entity.get();
         else throw new PersonNotFoundException(id);
     }

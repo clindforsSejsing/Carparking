@@ -18,6 +18,7 @@ package com.carparking.carparking.entity;
 //ManyToMany- Lazy
 //OneToOne: Eager
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,8 +42,8 @@ public class Person {
     @Column (length= 50, nullable = false)
     private String name;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
-    @JoinColumn(name="person_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
+    @JsonIgnore
+    @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
     private List<Car> cars = new ArrayList<>();
 
 

@@ -70,3 +70,121 @@ PUT/
 PATCH Uppdate ongoing parking if its not finished and move the stop time forward.
 
 //Carola Lindfors Sejsing
+
+
+-------------------------------------------------------------------------------
+#API Documentation:
+----------------------
+port: 8080
+-----------------------
+Fetch all persons:
+GET
+
+/api/persons
+
+Respons 200 Ok:
+[
+{
+"id": 1,
+"name": "Kalles Anka"
+},
+{
+"id": 2,
+"name": "Kajsas Anka"
+}
+]
+--------------------------
+Fetch One person with id;
+
+GET
+
+/api/persons/{id}
+
+Respons 200 OK:
+{
+"id": 1,
+"name": "Kalles Anka"
+}
+
+--------------------------
+Create one person:
+
+POST
+/api/persons/add
+
+(ex.)
+{"name":"Kalles Kaviar"}
+
+Respons 201 Created:
+{
+"id": 1,
+"name": "Kalles Kaviar"
+}
+
+------------------------
+Fetch all cars:
+GET
+
+/api/cars
+
+Respons 200 Ok:
+[
+{
+"id": 1,
+"reg": "batmanscar",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar"
+}
+},
+{
+"id": 2,
+"reg": "Thundercat",
+"person": {
+"id": 2,
+"name": "Kajsa Anka"
+}
+}
+]
+
+--------------------------
+Fetch one car with id;
+
+GET
+
+/api/cars/{id}
+
+Respons 200 Ok:
+{
+"id": 1,
+"reg": "batmanscar",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar"
+}
+}
+--------------------------
+Create one car:
+
+POST
+/api/cars/persons/{personId}
+
+
+(ex.)
+{
+"reg":"batmanscar"
+
+}
+
+Respons 201 created:
+
+{
+"id": 1,
+"reg": "batmanscar",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar"
+}
+}
+
+------------------------
