@@ -7,6 +7,7 @@ package com.carparking.carparking.entity;
 // 1.Skriva klart hur tabellerna ska kopplas ihop[x]
 //2. adda hårdkodad data till bla locations, läsa om geolatte, fixa kodimplementationen i bean [x]
 //3. skriv querys för att få ut relevant data / post/ patch/ put []
+//(fixa ihop parkingtimes, adda hjälpmetoder och fixa controller)
 //4. metoder för filtrering? adda i servicefiler alt repository []
 //5. skriv dokumentation för API i readme.md[]
 //6. adda javadocs, städa koden[]
@@ -18,11 +19,20 @@ package com.carparking.carparking.entity;
 //OneToOne: Eager
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="person")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,41 +41,13 @@ public class Person {
     @Column (length= 50, nullable = false)
     private String name;
 
-    public Person() {
-    }
-
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
     @JoinColumn(name="person_id", referencedColumnName = "id", nullable = false,insertable=false, updatable=false)
     private List<Car> cars = new ArrayList<>();
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
-    public void addCar(Car car){
+    public void addCar(Car car) {
         car.setPerson(this);
         this.cars.add(car);
     }
-
 }

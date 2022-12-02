@@ -1,34 +1,40 @@
 package com.carparking.carparking.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.Point;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.geolatte.geom.builder.DSL.g;
 import static org.geolatte.geom.builder.DSL.point;
 import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 
 @Entity
+@Table(name = "parking_location")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ParkingLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Point<G2D> coordinates;
-
     private String name;
-
-  /*  @JsonIgnore*/
     @Transient
     private String longitude;
-
-   /* @JsonIgnore*/
     @Transient
     private String latitude;
 
-    public String getLatitude() {
-        return latitude;
-    }
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
+    @JoinColumn(name="parking_location_id",referencedColumnName = "id",nullable = false,insertable=false, updatable=false)
+    private List<ParkingTime> parkinglocations = new ArrayList<>();
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -37,73 +43,15 @@ public class ParkingLocation {
         }
     }
 
-    public String getLongitude() {
-        return longitude;
-    }
-
     public void setLongitude(String longitude) {
         this.longitude = longitude;
         if(latitude != null) {
             setCoordinates(point(WGS84,g(Double.parseDouble(longitude), Double.parseDouble(latitude))));
         }
     }
-    /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
-    @JoinColumn(name="location_id",nullable = false)
-    private List<ParkingTime> parkingtimes = new ArrayList<>();*/
 
- /*   public List<ParkingTime> getParkingtimes() {
-        return parkingtimes;
+    public void addParkingLocation(ParkingTime parkingtime){
+        parkingtime.setParkingLocation(this);
+        this.parkinglocations.add(parkingtime);
     }
-
-    public void setParkingtimes(List<ParkingTime> parkingtimes) {
-        this.parkingtimes = parkingtimes;
-    }*/
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Point<G2D> getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Point<G2D> coordinate) {
-        this.coordinates = coordinate;
-    }
-
-    public ParkingLocation() {
-
-    }
-
-
-
-    public ParkingLocation( String name,Point<G2D> coordinates) {
-        this.name = name;
-        this.coordinates = coordinates;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /*public void setParkingtime(ParkingTime parkingTime) {
-    }*/
-
-  /*  @Override
-    public String toString() {
-        return "ParkingLocation{" +
-                "coordinate=" + coordinates +
-                ", name='" + name + '\'' +
-                '}';
-    }*/
-
-
 }
-

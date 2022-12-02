@@ -1,11 +1,25 @@
 package com.carparking.carparking.service;
 
-//här borde buisness-logiken vara
-public class ParkingService {
-/*    PersonRepository personRepository;
+import org.springframework.stereotype.Service;
 
-    @Override
-    public Person savePerson(Person person){
-        return personRepository.save(person);
-    }*/
+import java.time.LocalDateTime;
+
+@Service
+public class ParkingService {
+
+    public boolean isOngoingParking(LocalDateTime startime, LocalDateTime stoptime) {
+
+        LocalDateTime rightNow = LocalDateTime.now();
+        if (startime.equals(stoptime)) {
+            return false;
+        } else return !stoptime.equals(rightNow) && !stoptime.isBefore(rightNow);
+    }
+
+
+    public boolean isStopTimeAfterStartTime(Long id, LocalDateTime stoptime){
+
+        LocalDateTime rightNow = LocalDateTime.now();
+
+        return id != null && stoptime.isAfter(rightNow);
+    }
 }

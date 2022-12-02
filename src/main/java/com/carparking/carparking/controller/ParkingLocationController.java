@@ -19,18 +19,18 @@ public class ParkingLocationController {
     }
 
 
-    @GetMapping("/parkinglocations")
+    @GetMapping("/api/parkinglocations")
     public List<ParkingLocation> allPoints() {
         return parkingLocationRepository.findAll();
     }
 
 
-    @GetMapping("/parkinglocations/{id}")
+    @GetMapping("/api/parkinglocations/{id}")
     public Optional<ParkingLocation> getOne(@PathVariable Long id) {
         return parkingLocationRepository.findById(id);
     }
 
-    @PostMapping("/parkinglocations")
+    @PostMapping("/api/parkinglocations")
     public ResponseEntity<ParkingLocation> createLocation(@RequestBody ParkingLocation parkinglocaton) {
         var pl = parkingLocationRepository.save(parkinglocaton);
         return  ResponseEntity.created(

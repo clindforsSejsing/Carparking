@@ -20,22 +20,29 @@ public class CarController {
         this.personRepository = personRepository;
     }
 
-    @GetMapping("/cars")
+    @GetMapping("/api/cars")
     public Iterable<Car> getall() {
         return carRepository.findAll();
     }
 
-    @GetMapping("/cars/{id}")
+    @GetMapping("/api/cars/{id}")
     public Optional<Car> getOne(@PathVariable Long id) {
         return carRepository.findById(id);
 
     }
 
-    @PostMapping("/cars")
+    @PostMapping("/api/cars")
     public ResponseEntity<Car> createCar(@RequestBody Car car) {
         var c = carRepository.save(car);
-        return  ResponseEntity.created(
-        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri()).build();
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.getId()).toUri()).build();
     }
 
+ /*   @GetMapping("/api/cars/{car_Id}/persons/{person_Id}") {
+        Public ResponsEntity<Cars > saveCar(@RequestBody Car car, @PathVariable Long personId)
+
+        carRepository.findByPersonId();
+    }*/
 }
+
+//carRepository.findbyPersonId(personId);

@@ -1,50 +1,40 @@
 package com.carparking.carparking.controller;
 
-import com.carparking.carparking.entity.Car;
 import com.carparking.carparking.entity.Person;
 import com.carparking.carparking.repository.CarRepository;
-import com.carparking.carparking.repository.PersonRepository;
+import com.carparking.carparking.service.PersonService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.Set;
-
+import java.util.List;
+@AllArgsConstructor
 @RestController
+@RequestMapping("/api/persons")
 public class PersonController {
-    PersonRepository personRepository;
+
+    @Autowired
+    PersonService personService;
+
     CarRepository carRepository;
 
-    public PersonController(PersonRepository personRepository, CarRepository carRepository) {
-        this.personRepository = personRepository;
-        this.carRepository = carRepository;
+    @GetMapping
+    public ResponseEntity<List<Person>> getPersons()
+    {
+        return new ResponseEntity<>(personService.getPersons(), HttpStatus.OK);
     }
 
-    @GetMapping("/persons")
-    public Iterable<Person> getall() {
-        return personRepository.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<Person> getPerson(@PathVariable Long id)
+    {
+        return new ResponseEntity<Person> (personService.getPerson(id), HttpStatus.OK);
     }
 
-    @GetMapping("/persons/{id}")
-    public Optional<Person> getOne(@PathVariable Long id) {
-        return personRepository.findById(id);
-
+    @PostMapping("/add")
+    public ResponseEntity<Person> savePerson(@RequestBody Person person) {
+        return new ResponseEntity<>(personService.savePerson(person), HttpStatus.CREATED);
     }
 
-    @PostMapping("persons")
-    public Person addPerson(@RequestBody Person person) {
-        var m = Set.copyOf(person.getCars());
-        person.getCars().clear();
-        for (Car car : m) {
-            if (car.getId() != null)
-                person.getCars()
-                        .add(
-                                carRepository.findById(car.getId())
-                                        .orElse(car));
-            else {
-                person.addCar(car);
-            }
-        }
-
-        return personRepository.save(person);
-    }
 }
