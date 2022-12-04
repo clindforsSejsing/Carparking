@@ -40,41 +40,50 @@ public class ParkingTimeServiceImp implements ParkingTimeService {
         return parkingTimeRepository.findByCarId(carId);
     }
 
+
     @Override
-    public ParkingTime getParkingTimeById(Long parkingTimeId) {
-        Optional<ParkingTime> parkingTime = parkingTimeRepository.findById(parkingTimeId);
-        return findingParkingTime(parkingTime, parkingTimeId);
+    public ParkingTime getParkingTimeById(Long carId) {
+        Optional<ParkingTime> parkingTime = parkingTimeRepository.findById(carId);
+        return findingParkingTime(parkingTime, carId);
     }
 
     @Override
-    public ParkingTime saveParkingTime (ParkingTime parkingTime, Long carId, Long parkingLocationsId, LocalDateTime modified) {
+    public ParkingTime saveParkingTime (ParkingTime parkingTime, Long carId, Long locationsId, LocalDateTime stoptime) {
     Car car = findingCar(carRepository.findById(carId), carId);
-    ParkingLocation parkingLocation = findingParkingLocation(parkingLocationRepository.findById(parkingLocationsId), parkingLocationsId);
+    ParkingLocation parkingLocation = findingParkingLocation(parkingLocationRepository.findById(locationsId), locationsId);
     parkingTime.setParkingLocation(parkingLocation);
     parkingTime.setCar(car);
+
+    if(parkingService.isStopTimeAfterStartTime(carId, stoptime)){
+        parkingTime.setStoptime(parkingTime.getStoptime());
+        parkingTime.setOngoingParking(true);
+        /*parkingTimeRepository.save(parkingTime);*/
+
+        parkingTime.setOngoingParking(parkingService.isOngoingParking(parkingTime.getTimestart(),parkingTime.getStoptime()));
+        parkingTimeRepository.save(parkingTime);
+    }
 
     return parkingTimeRepository.save(parkingTime);
     }
 
     @Override
-    public ParkingTime updateModifiedTime(ParkingTime parkingTime, Long parkingTimeId, Long carId, LocalDateTime modified, LocalDateTime timestart) {
-        var parkingTimeOpt = parkingTimeRepository.findById(parkingTimeId);
-        if (parkingService.isStopTimeAfterStartTime(parkingTimeId, modified)) {
+    public ParkingTime updateParkingTime (ParkingTime parkingTimeIn, Long parkingTimeId) {
+       ParkingTime parkingTime = parkingTimeRepository.findById(parkingTimeId).get();
 
-            if (parkingTimeOpt.isPresent()) {
-                ParkingTime parkingTimes = parkingTimeOpt.get();
-                parkingTimes.setModified(modified);
-                parkingTimes.setOngoingParking(true);
-                parkingTimeRepository.save(parkingTimes);
+        if(parkingService.isStopTimeAfterStartTime(parkingTimeId, parkingTimeIn.getStoptime())){
+            parkingTime.setStoptime(parkingTimeIn.getStoptime());
+            parkingTime.setOngoingParking(true);
+            parkingTimeRepository.save(parkingTime);
 
-                parkingTime.setOngoingParking(parkingService.isOngoingParking(timestart, modified));
-                parkingTimeRepository.save(parkingTime);
-            } else {
-                throw new ParkingTimeNotFoundExeption(parkingTimeId);
-            }
+            /*parkingTime.setOngoingParking(parkingService.isOngoingParking(parkingTime.getModified(),parkingTime.getStoptime()));*/
+
+        } else {
+            parkingTime.setOngoingParking(false);
         }
-        return parkingTime;
+
+        return parkingTimeRepository.save(parkingTime);
     }
+
 
     static ParkingTime findingParkingTime(Optional<ParkingTime> entity, Long parkingTimeId) {
         if (entity.isPresent()) return entity.get();
@@ -84,9 +93,30 @@ public class ParkingTimeServiceImp implements ParkingTimeService {
         if (entity.isPresent()) return entity.get();
         else throw new CarNotFoundException(carId);
     }
+
     public ParkingLocation findingParkingLocation(Optional<ParkingLocation> entity, Long parkingLocationsId) {
         if (entity.isPresent()) return entity.get();
         else throw new ParkingLocationNotFoundException(parkingLocationsId);
 }
 }
 
+
+ /*   @Override
+    public ParkingTime updateModifiedTime(Long parkingTimeId, Long carId) {
+        var parkingTimeOpt = parkingTimeRepository.findById(parkingTimeId);
+        if (parkingService.isStopTimeAfterStartTime(parkingTimeId, saveParkingTime().modified)) {
+
+            if (parkingTimeOpt.isPresent()) {
+                ParkingTime parkingTimes = parkingTimeOpt.get();
+                parkingTimes.setModified(parkingTimes.getModified());
+                parkingTimes.setOngoingParking(true);
+                parkingTimeRepository.save(parkingTimes);
+
+                parkingTimes.setOngoingParking(parkingService.isOngoingParking(parkingTimes.getTimestart(),parkingTimes.getModified()));
+                parkingTimeRepository.save(parkingTimes);
+            } else {
+                throw new ParkingTimeNotFoundExeption(parkingTimeId);
+            }
+        }
+        return parkingTime;
+    }*/

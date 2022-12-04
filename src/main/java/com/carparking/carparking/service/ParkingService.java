@@ -9,27 +9,29 @@ public class ParkingService {
 
 /*    *//**
      /**
-     * @param startime Time when ParkingTime starts
-     * @param modified Time when ParkingTime should stop
+     * @param modified Time when ParkingTime is being updated
+     * @param stoptime Time when ParkingTime should stop
      * @return final check to see so that stop is not before start and nor equal each other.
      */
-    public boolean isOngoingParking(LocalDateTime startime, LocalDateTime modified) {
+    public boolean isOngoingParking(LocalDateTime modified, LocalDateTime stoptime) {
 
         LocalDateTime rightNow = LocalDateTime.now();
-        if (startime.equals(modified)) {
+        if (modified.equals(stoptime) & stoptime.isBefore(rightNow)) {
             return false;
-        } else return !modified.equals(rightNow) && !modified.isBefore(rightNow);
+        }
+        return true;
     }
 
 
+
     /**
-     * @param id ParkingTime id
-     * @param modified stoptime for parking
+     * @param parkingTimeId ParkingTime id
+     * @param stoptime stoptime for parking
      * @return must contain id for ParkingTime and stoptime can not be set to be after starttime.
      */
-    public boolean isStopTimeAfterStartTime(Long id, LocalDateTime modified){
+    public boolean isStopTimeAfterStartTime(Long parkingTimeId, LocalDateTime stoptime){
 
         LocalDateTime rightNow = LocalDateTime.now();
-        return id != null && modified.isAfter(rightNow);
+        return parkingTimeId != null && stoptime.isAfter(rightNow);
     }
 }

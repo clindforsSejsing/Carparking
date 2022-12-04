@@ -23,8 +23,11 @@ public class ParkingTime {
 
 
     @CreationTimestamp
-    @Column(name= "timestart", nullable = false, updatable = false)
-    private LocalDateTime timestart= LocalDateTime.now();
+    @Column(name= "timestart", updatable = false)
+    private LocalDateTime timestart = LocalDateTime.now();
+
+    @Column(name= "stoptime")
+    private LocalDateTime stoptime;
 
     @UpdateTimestamp
     @Column(name= "modified")

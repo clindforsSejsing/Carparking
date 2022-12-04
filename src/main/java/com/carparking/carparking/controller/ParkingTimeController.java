@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,23 +26,21 @@ public class ParkingTimeController {
 
 
     @GetMapping("/cars/{carId}")
-    public ResponseEntity<ParkingTime> getParkingTimesForACar(@PathVariable Long carId) {
-            return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.OK);
+    public ResponseEntity<ParkingTime>getParkingTimeById(@PathVariable Long carId) {
+        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.OK);
     }
 
-   @PostMapping("/cars/{carId}/parkingslocations/{locationsId}")
+    @PostMapping("/cars/{carId}/locations/{locationsId}")
     public ResponseEntity<ParkingTime> saveParkingtimeForCar(@RequestBody ParkingTime parkingTime,
-    @PathVariable Long carId, @PathVariable Long locationsId, @PathVariable LocalDateTime modified) {
-    return new ResponseEntity<>(parkingTimeService.saveParkingTime(parkingTime, carId, locationsId, modified), HttpStatus.CREATED);
+                                                             @PathVariable Long carId, @PathVariable Long locationsId) {
+        return new ResponseEntity<>(parkingTimeService.saveParkingTime(parkingTime, carId, locationsId, parkingTime.getStoptime()), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{parkingTimesId}/cars/{carsId}")
-    public ResponseEntity<ParkingTime> updateModifiedTime(@RequestBody ParkingTime parkingTime, @PathVariable Long parkingTimeId,
-  @PathVariable Long carId, @PathVariable LocalDateTime modified, @PathVariable LocalDateTime timestart)
-    {
-        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.CREATED);
+    @PatchMapping("/{parkingTimeId}")
+    public ResponseEntity<ParkingTime> updateParkingtimeForCar(@RequestBody ParkingTime parkingTime, @PathVariable Long parkingTimeId) {
+        return new ResponseEntity<>(parkingTimeService.updateParkingTime(parkingTime, parkingTimeId), HttpStatus.CREATED);
     }
-    }
+}
 
 
 /*För Parkeringstillfälle vill vi ha endpoints för:
@@ -62,3 +59,13 @@ public class ParkingTimeController {
 
      /*ParkingTime getOngoingParking(ParkingTime parkingTime, Long carId);//använd metod för att filtrera ch flagga ongoing
         ParkingTime getEndedParking(ParkingTime parkingTime, Long carId);//använd metod för att få ut avslutade tider*/
+
+/*
+    @PatchMapping("/cars/{carId}/locations/{locationsId}")
+    public ResponseEntity<ParkingTime> updateModifiedTime(@RequestBody ParkingTime parkingTime, @PathVariable Long parkingTimeId,
+                                                          @PathVariable Long carId, @PathVariable LocalDateTime modified, @PathVariable LocalDateTime timestart)
+    {
+        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.CREATED);
+    }
+}
+*/
