@@ -29,6 +29,7 @@ public class ParkingTime {
     @UpdateTimestamp
     @Column(name= "modified")
     private LocalDateTime modified;
+
     @Column(name= "ongoing_parking")
     private Boolean ongoingParking;
 

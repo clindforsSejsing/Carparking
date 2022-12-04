@@ -1,4 +1,5 @@
 package com.carparking.carparking.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class Person {
     @Column (length= 50, nullable = false)
     private String name;
 
-    @JsonIgnore
+   @JsonIgnore
     @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch =FetchType.EAGER)
     private List<Car> cars = new ArrayList<>();
 

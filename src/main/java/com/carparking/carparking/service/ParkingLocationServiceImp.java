@@ -3,18 +3,20 @@ package com.carparking.carparking.service;
 import com.carparking.carparking.entity.ParkingLocation;
 import com.carparking.carparking.exceptions.ParkingLocationNotFoundException;
 import com.carparking.carparking.repository.ParkingLocationRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @Service
 public class ParkingLocationServiceImp implements ParkingLocationService{
 
     ParkingLocationRepository parkingLocationRepository;
 
+    public ParkingLocationServiceImp(ParkingLocationRepository parkingLocationRepository) {
+        this.parkingLocationRepository = parkingLocationRepository;
+    }
 
     @Override
     public ParkingLocation getOneParkingLocation(Long id) {

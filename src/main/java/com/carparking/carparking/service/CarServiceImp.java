@@ -5,7 +5,6 @@ import com.carparking.carparking.entity.Person;
 import com.carparking.carparking.exceptions.CarNotFoundException;
 import com.carparking.carparking.repository.CarRepository;
 import com.carparking.carparking.repository.PersonRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +12,17 @@ import java.util.Optional;
 
 import static com.carparking.carparking.service.PersonServiceImp.findingPerson;
 
-@AllArgsConstructor
+
 @Service
 public class CarServiceImp implements CarService{
 
     CarRepository carRepository;
     PersonRepository personRepository;
+
+    public CarServiceImp(CarRepository carRepository, PersonRepository personRepository) {
+        this.carRepository = carRepository;
+        this.personRepository = personRepository;
+    }
 
     @Override
     public List<Car> getCars() {

@@ -1,7 +1,6 @@
 package com.carparking.carparking.controller;
 
 import com.carparking.carparking.entity.Person;
-import com.carparking.carparking.repository.CarRepository;
 import com.carparking.carparking.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ public class PersonController {
 
 
     PersonService personService;
-    CarRepository carRepository;
 
     @GetMapping
     public ResponseEntity<List<Person>> getPersons()

@@ -1,15 +1,50 @@
 package com.carparking.carparking.controller;
 
+//FELSÖKA-- varför bygger den inte? sätta tillbaka construktorerna? autowire?
+
+
 import com.carparking.carparking.entity.ParkingTime;
-import com.carparking.carparking.repository.ParkingTimeRepository;
 import com.carparking.carparking.service.ParkingTimeService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/parkings")
+public class ParkingTimeController {
+
+    ParkingTimeService parkingTimeService;
+
+    @GetMapping
+    public ResponseEntity<List<ParkingTime>> getall() {
+        return new ResponseEntity<>(parkingTimeService.getParkingTimes(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/cars/{carId}")
+    public ResponseEntity<ParkingTime> getParkingTimesForACar(@PathVariable Long carId) {
+            return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.OK);
+    }
+
+   @PostMapping("/cars/{carId}/parkingslocations/{locationsId}")
+    public ResponseEntity<ParkingTime> saveParkingtimeForCar(@RequestBody ParkingTime parkingTime,
+    @PathVariable Long carId, @PathVariable Long locationsId, @PathVariable LocalDateTime modified) {
+    return new ResponseEntity<>(parkingTimeService.saveParkingTime(parkingTime, carId, locationsId, modified), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{parkingTimesId}/cars/{carsId}")
+    public ResponseEntity<ParkingTime> updateModifiedTime(@RequestBody ParkingTime parkingTime, @PathVariable Long parkingTimeId,
+  @PathVariable Long carId, @PathVariable LocalDateTime modified, @PathVariable LocalDateTime timestart)
+    {
+        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.CREATED);
+    }
+    }
+
 
 /*För Parkeringstillfälle vill vi ha endpoints för:
         GET Hämta alla eller en, hämta pågående/avslutade (filtrering) för en person eller bil.
@@ -20,61 +55,10 @@ import java.util.Optional;
 /*CRUD implementationer för entiteterna.
         Starta, stoppa och ta ut information om pågående och avslutade
         parkeringstillfällen.*/
-@AllArgsConstructor
-@RestController
-@RequestMapping("/api/parkings")
-public class ParkingTimeController {
 
-    ParkingTimeRepository parkingTimeRepository;
-    ParkingTimeService parkingTimeService;
+//post, patch,ParkingTime parkingTime, Long carId, Long parkingLocationsId, LocalDateTime modified
+//querystring for ongoing, ended parkings samt för ägarna (personer) till bilarna ev en endpoint för det
+//ang konvertera tid: https://www.baeldung.com/spring-date-parameters
 
-
-    @GetMapping("/api/parkings")
-    public Iterable<ParkingTime> getall() {
-        return parkingTimeRepository.findAll();
-    }
-
-    @GetMapping("/api/parkings/cars/{id}")
-    public Optional<ParkingTime> getOne(@PathVariable Long id) {
-        return parkingTimeRepository.findById(id);
-    }
-
-
-  /*  @PatchMapping("/api/parkings/cars/{id}")
-    @Transactional
-    public void UppdateParkingTime(@PathVariable Long id, @RequestParam LocalDateTime timestop) {
-
-        //@pathvariable är samma som @requestparam
-        var parkingTimeOpt = parkingTimeRepository.findById(id);
-        if (parkingService.isStopTimeAfterStartTime(id, timestop)) {
-            if (parkingTimeOpt.isPresent()) {
-                ParkingTime parkingTimes = parkingTimeOpt.get();
-                parkingTimes.setModified(timestop);
-                parkingTimes.setOngoingParking(true);
-                parkingTimeRepository.save(parkingTimes);
-            } else {
-                throw new RuntimeException();
-            }
-        }
-*/
-    }
-
-
-
-
-
-   /* @PostMapping(path = "/api/parkings/cars/{id}")
-    public ResponseEntity<ParkingTime> addNewParkingTime(@RequestBody ParkingTime parkingTime) {
-
-        if (parkingService.isOngoingParking(parkingTime.getTimestart(),parkingTime.getModified())) {
-            parkingTime.setOngoingParking(true);
-        } else {
-            parkingTime.setOngoingParking(false);
-        }
-
-        parkingTimeRepository.save(parkingTime);
-
-        return new ResponseEntity<>(parkingTime, HttpStatus.CREATED);
-    }*/
-
-
+     /*ParkingTime getOngoingParking(ParkingTime parkingTime, Long carId);//använd metod för att filtrera ch flagga ongoing
+        ParkingTime getEndedParking(ParkingTime parkingTime, Long carId);//använd metod för att få ut avslutade tider*/

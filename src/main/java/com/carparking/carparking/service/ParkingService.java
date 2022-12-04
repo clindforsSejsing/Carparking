@@ -7,6 +7,12 @@ import java.time.LocalDateTime;
 @Service
 public class ParkingService {
 
+/*    *//**
+     /**
+     * @param startime Time when ParkingTime starts
+     * @param modified Time when ParkingTime should stop
+     * @return final check to see so that stop is not before start and nor equal each other.
+     */
     public boolean isOngoingParking(LocalDateTime startime, LocalDateTime modified) {
 
         LocalDateTime rightNow = LocalDateTime.now();

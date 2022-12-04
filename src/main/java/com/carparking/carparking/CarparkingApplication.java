@@ -2,6 +2,7 @@ package com.carparking.carparking;
 
 import com.carparking.carparking.entity.ParkingLocation;
 import com.carparking.carparking.repository.ParkingLocationRepository;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,7 @@ import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 
 
 @SpringBootApplication
+@NoArgsConstructor
 public class CarparkingApplication {
 
 		public static void main (String[]args){

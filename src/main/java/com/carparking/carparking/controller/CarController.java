@@ -1,8 +1,6 @@
 package com.carparking.carparking.controller;
 
 import com.carparking.carparking.entity.Car;
-import com.carparking.carparking.repository.CarRepository;
-import com.carparking.carparking.repository.PersonRepository;
 import com.carparking.carparking.service.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,9 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
+
     CarService carService;
-    CarRepository carRepository;
-    PersonRepository personRepository;
+
 
     @GetMapping
     public ResponseEntity<List<Car>> getCars() {
@@ -26,7 +24,7 @@ public class CarController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCar(@PathVariable Long id) {
-        return new ResponseEntity<>(carService.getCar(id), HttpStatus.OK);
+        return new ResponseEntity<Car> (carService.getCar(id), HttpStatus.OK);
     }
 
     @GetMapping("/persons/{personId}")

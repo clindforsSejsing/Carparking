@@ -52,7 +52,7 @@ public class ParkingLocation {
         }
     }
 
-  /*  public void addParkingLocation(ParkingTime parkingtime){
+/*   public void addParkingLocation(ParkingTime parkingtime){
         parkingtime.setParkingLocation(this);
         this.parkinglocations.add(parkingtime);
     }*/

@@ -1,7 +1,6 @@
 package com.carparking.carparking.controller;
 
 import com.carparking.carparking.entity.ParkingLocation;
-import com.carparking.carparking.repository.ParkingLocationRepository;
 import com.carparking.carparking.service.ParkingLocationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/parkinglocations")
 public class ParkingLocationController {
-    ParkingLocationRepository parkingLocationRepository;
     ParkingLocationService parkingLocationService;
 
     @GetMapping
