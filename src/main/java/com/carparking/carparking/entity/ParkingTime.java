@@ -34,7 +34,7 @@ public class ParkingTime {
     private LocalDateTime modified;
 
     @Column(name= "ongoing_parking")
-    private Boolean ongoingParking;
+    private Boolean ongoingParking = false;
 
     @ManyToOne
     @JoinColumn(name="car_id", referencedColumnName = "id")
@@ -42,6 +42,7 @@ public class ParkingTime {
 
     @ManyToOne
     private ParkingLocation parkingLocation;
+
 
 }
 

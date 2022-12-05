@@ -34,4 +34,6 @@ public class ParkingService {
         LocalDateTime rightNow = LocalDateTime.now();
         return parkingTimeId != null && stoptime.isAfter(rightNow);
     }
+
+
 }

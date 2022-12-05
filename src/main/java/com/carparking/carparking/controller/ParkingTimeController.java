@@ -1,8 +1,5 @@
 package com.carparking.carparking.controller;
 
-//FELSÖKA-- varför bygger den inte? sätta tillbaka construktorerna? autowire?
-
-
 import com.carparking.carparking.entity.ParkingTime;
 import com.carparking.carparking.service.ParkingTimeService;
 import lombok.AllArgsConstructor;
@@ -26,9 +23,16 @@ public class ParkingTimeController {
 
 
     @GetMapping("/cars/{carId}")
-    public ResponseEntity<ParkingTime>getParkingTimeById(@PathVariable Long carId) {
-        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.OK);
+    public ResponseEntity<List<ParkingTime>>getParkingTimeById(@PathVariable Long carId) {
+        return new ResponseEntity<>(parkingTimeService.getACarsParkingTimes(carId), HttpStatus.OK);
     }
+
+
+    @GetMapping("/cars/{carId}/{ongoingParking}")
+    List<ParkingTime> getParkingTimeByIdAndEndedOrOngoingParkings(@PathVariable Long carId, @PathVariable Boolean ongoingParking) {
+        return parkingTimeService.getParkingTimeByIdAndEndedOrOngoingParkings( carId,ongoingParking);
+    }
+
 
     @PostMapping("/cars/{carId}/locations/{locationsId}")
     public ResponseEntity<ParkingTime> saveParkingtimeForCar(@RequestBody ParkingTime parkingTime,
@@ -43,29 +47,6 @@ public class ParkingTimeController {
 }
 
 
-/*För Parkeringstillfälle vill vi ha endpoints för:
-        GET Hämta alla eller en, hämta pågående/avslutade (filtrering) för en person eller bil.
-        POST Skapa ny, starttid sätts till nuvarande tid, stopptid verifieras till att vara efter nu.
-        PUT/
-        PATCH Uppdatera pågående parkering som inte är avslutad för att flytta fram stopptid.*/
 
-/*CRUD implementationer för entiteterna.
-        Starta, stoppa och ta ut information om pågående och avslutade
-        parkeringstillfällen.*/
 
-//post, patch,ParkingTime parkingTime, Long carId, Long parkingLocationsId, LocalDateTime modified
-//querystring for ongoing, ended parkings samt för ägarna (personer) till bilarna ev en endpoint för det
-//ang konvertera tid: https://www.baeldung.com/spring-date-parameters
 
-     /*ParkingTime getOngoingParking(ParkingTime parkingTime, Long carId);//använd metod för att filtrera ch flagga ongoing
-        ParkingTime getEndedParking(ParkingTime parkingTime, Long carId);//använd metod för att få ut avslutade tider*/
-
-/*
-    @PatchMapping("/cars/{carId}/locations/{locationsId}")
-    public ResponseEntity<ParkingTime> updateModifiedTime(@RequestBody ParkingTime parkingTime, @PathVariable Long parkingTimeId,
-                                                          @PathVariable Long carId, @PathVariable LocalDateTime modified, @PathVariable LocalDateTime timestart)
-    {
-        return new ResponseEntity<>(parkingTimeService.getCar(carId), HttpStatus.CREATED);
-    }
-}
-*/

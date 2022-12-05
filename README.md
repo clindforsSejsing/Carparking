@@ -281,3 +281,202 @@ Respons 201 Created:
 "latitude": "22.24251754309973"
 }
 --------------------------------
+Create a new parkingtime:
+
+POST
+/api/parkings/cars/{id}/parkinglocations/{id}
+(ex.)
+{
+"stoptime":"2022-12-04T21:30:05"
+}
+
+Respons 201 Created.
+
+{
+"id": 1,
+"timestart": "2022-12-04T19:55:50.0482219",
+"modified": "2022-12-04T21:30:05.0482219",
+"ongoingParking": null,
+"car": {
+"id": 1,
+"reg": "robins mc",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar13"
+}
+},
+"parkingLocation": {
+"id": 1,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58319179303082,
+22.174553982619024
+]
+},
+"name": "Malmudden",
+"longitude": null,
+"latitude": null
+}
+}
+-----------------------------------
+Update stoptime to a parkingtime:
+
+PATCH
+/api/parkings/{id}
+
+(ex)
+{
+"timestop":"2022-12-10T15:53:16"
+}
+Respons 201 Created.
+
+(ex.)
+
+[
+{
+"id": 1,
+"timestart": "2022-12-05T13:34:06.180261",
+"stoptime": "2022-12-12T15:53:16",
+"modified": "2022-12-05T13:37:06.180261",
+"ongoingParking": true,
+"car": {
+"id": 1,
+"reg": "robins mct",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar14"
+}
+}
+------------------------------------
+Fetch all parkings for a car:
+
+GET
+/api/parkings/cars/{id}
+
+Respons 200 OK.
+
+(ex.)
+
+[
+{
+"id": 1,
+"timestart": "2022-12-05T13:34:06.180261",
+"stoptime": "2022-12-05T15:58:16",
+"modified": "2022-12-05T13:34:06.180261",
+"ongoingParking": true,
+"car": {
+"id": 1,
+"reg": "robins mct",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar14"
+}
+},
+"parkingLocation": {
+"id": 1,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58319179303082,
+22.174553982619024
+]
+},
+"name": "Malmudden",
+"longitude": null,
+"latitude": null
+}
+},
+{
+"id": 2,
+"timestart": "2022-12-05T13:34:09.382818",
+"stoptime": "2022-12-05T15:58:16",
+"modified": "2022-12-05T13:34:09.382818",
+"ongoingParking": true,
+"car": {
+"id": 1,
+"reg": "robins mct",
+"person": {
+"id": 1,
+"name": "Kalles Kaviar14"
+}
+},
+"parkingLocation": {
+"id": 3,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58286282081716,
+22.146910892762495
+]
+},
+"name": "Stadsparken",
+"longitude": null,
+"latitude": null
+}
+}
+]
+------------------------------------------------------------
+Fetch parkings all ended/ongoing parkingtimes for a car:
+
+GET
+localhost:8080/api/parkings/cars/{id}/false
+localhost:8080/api/parkings/cars/{id}/true
+
+
+Respons 200 Ok:
+(ex.)
+{
+"id": 3,
+"timestart": "2022-12-05T13:53:07.480518",
+"stoptime": "2022-12-05T10:58:16",
+"modified": "2022-12-05T13:53:07.480518",
+"ongoingParking": false,
+"car": {
+"id": 2,
+"reg": "robins mct",
+"person": {
+"id": 2,
+"name": "Kalles"
+}
+},
+"parkingLocation": {
+"id": 3,
+"coordinates": {
+"type": "Point",
+"crs": {
+"type": "name",
+"properties": {
+"name": "EPSG:4326"
+}
+},
+"coordinates": [
+65.58286282081716,
+22.146910892762495
+]
+},
+"name": "Stadsparken",
+"longitude": null,
+"latitude": null
+}
+}
+------------------------------------------------------
+
