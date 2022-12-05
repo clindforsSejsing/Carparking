@@ -77,7 +77,9 @@ PATCH Uppdate ongoing parking if its not finished and move the stop time forward
 ----------------------
 port: 8080
 -----------------------
-Fetch all persons:
+
+
+#Fetch all persons:
 GET
 
 /api/persons
@@ -93,8 +95,12 @@ Respons 200 Ok:
 "name": "Kajsas Anka"
 }
 ]
+
+
 --------------------------
-Fetch One person with id;
+
+
+#Fetch One person with id;
 
 GET
 
@@ -106,8 +112,11 @@ Respons 200 OK:
 "name": "Kalles Anka"
 }
 
+
 --------------------------
-Create one person:
+
+
+#Create one person:
 
 POST
 /api/persons/add
@@ -122,7 +131,9 @@ Respons 201 Created:
 }
 
 ------------------------
-Fetch all cars:
+
+
+#Fetch all cars:
 GET
 
 /api/cars
@@ -148,8 +159,11 @@ Respons 200 Ok:
 }
 ]
 
+
 --------------------------
-Fetch one car with id;
+
+
+#Fetch one car with id;
 
 GET
 
@@ -165,8 +179,11 @@ Respons 200 Ok:
 "name": "Kalles Kaviar"
 }
 }
+
 --------------------------
-Create one car:
+
+
+#Create one car:
 
 POST
 /api/cars/persons/{personId}
@@ -190,7 +207,9 @@ Respons 201 Created:
 }
 
 ------------------------
-Fetch all parkeringlocations:
+
+
+#Fetch all parkeringlocations:
 
 GET
 /api/parkinglocations
@@ -220,7 +239,9 @@ Respons 200 Ok:
 ]
 
 --------------------------------
-Fetch a parkinglocation with id:
+
+
+#Fetch a parkinglocation with id:
 
 GET
 /api/parkinglocations/{id}
@@ -247,7 +268,9 @@ Respons 200 Ok:
 }
 
 --------------------------------
-Create a new parkinglocation:
+
+
+#Create a new parkinglocation:
 
 POST
 /api/parkinglocations/add
@@ -280,8 +303,11 @@ Respons 201 Created:
 "longitude": "65.58360721780332",
 "latitude": "22.24251754309973"
 }
+
 --------------------------------
-Create a new parkingtime:
+
+
+#Create a new parkingtime:
 
 POST
 /api/parkings/cars/{id}/parkinglocations/{id}
@@ -325,8 +351,12 @@ Respons 201 Created.
 "latitude": null
 }
 }
+
+
 -----------------------------------
-Update stoptime to a parkingtime:
+
+
+#Update stoptime to a parkingtime:
 
 PATCH
 /api/parkings/{id}
@@ -354,8 +384,12 @@ Respons 201 Created.
 "name": "Kalles Kaviar14"
 }
 }
+
+
 ------------------------------------
-Fetch all parkings for a car:
+
+
+#Fetch all parkings for a car:
 
 GET
 /api/parkings/cars/{id}
@@ -434,8 +468,12 @@ Respons 200 OK.
 }
 }
 ]
+
+
 ------------------------------------------------------------
-Fetch parkings all ended/ongoing parkingtimes for a car:
+
+
+#Fetch parkings all ended/ongoing parkingtimes for a car:
 
 GET
 localhost:8080/api/parkings/cars/{id}/false
@@ -478,5 +516,7 @@ Respons 200 Ok:
 "latitude": null
 }
 }
+
+
 ------------------------------------------------------
 
