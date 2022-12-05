@@ -49,18 +49,6 @@ public class ParkingTimeServiceImp implements ParkingTimeService {
         return parkingTimeRepository.findByCarId(carId);
     }
 
-    /*@Override
-    public List<ParkingTime> getParkingTimeByIdAndOngoingParkings(ParkingTime parkingTime, Long carId) {
-        var car= parkingTimeRepository.findByCarId(carId);
-        return (List<ParkingTime>) parkingTimeRepository.findByOngoingParking(true);
-    }*/
-
-/*    @Override
-    public List<ParkingTime> getParkingTimeByIdAndEndedParkings(ParkingTime parkingTime, Long carId) {
-        parkingTimeRepository.findByCarId(carId);
-        return (List<ParkingTime>)parkingTimeRepository.findByOngoingParking(false);
-    }*/
-
     @Override
     public ParkingTime saveParkingTime (ParkingTime parkingTime, Long carId, Long locationsId, LocalDateTime stoptime) {
     Car car = findingCar(carRepository.findById(carId), carId);
@@ -96,11 +84,6 @@ public class ParkingTimeServiceImp implements ParkingTimeService {
         return parkingTimeRepository.save(parkingTime);
     }
 
-
-   /* static ParkingTime findingParkingTime(Optional<ParkingTime> entity, Long parkingTimeId) {
-        if (entity.isPresent()) return entity.get();
-        else throw new ParkingTimeNotFoundExeption(parkingTimeId);
-    }*/
     static Car findingCar (Optional<Car> entity, Long carId) {
         if (entity.isPresent()) return entity.get();
         else throw new CarNotFoundException(carId);

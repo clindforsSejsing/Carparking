@@ -51,9 +51,4 @@ public class ParkingLocation {
             setCoordinates(point(WGS84,g(Double.parseDouble(longitude), Double.parseDouble(latitude))));
         }
     }
-
-/*   public void addParkingLocation(ParkingTime parkingtime){
-        parkingtime.setParkingLocation(this);
-        this.parkinglocations.add(parkingtime);
-    }*/
 }
